@@ -109,8 +109,10 @@ public class ListActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             switch (direction){
                 case ItemTouchHelper.LEFT:
-                    service.delete(service.findById(position));
+                    //************************
+                    service.delete(service.findById(position+1));
                     chiefAdapter.notifyItemRemoved(position);
+                    //*******************
                     break;
                 case ItemTouchHelper.RIGHT:
                     View popup = LayoutInflater.from(ListActivity.this).inflate(R.layout.star_edit_item, null,
@@ -123,8 +125,8 @@ public class ListActivity extends AppCompatActivity {
                     bar.setRating(service.findById(position+1).getStar());
                     idss.setText(((TextView)findViewById(R.id.ids)).getText().toString());
                     AlertDialog.Builder alert = new AlertDialog.Builder(ListActivity.this, R.style.AlertDialogCustom);
-                    alert.setTitle("Notez : ");
-                    alert.setMessage("Chef " + service.findById(position+1).getName());
+                    alert.setTitle("Notez : \n" + service.findById(position+1).getName());
+                    //alert.setMessage("Chef " + service.findById(position+1).getName());
                     alert.setView(popup);
                     alert.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
                         @Override
@@ -148,8 +150,6 @@ public class ListActivity extends AppCompatActivity {
                     break;
             }
         }
-
-
     };
 
     class FetchImage extends Thread{
@@ -194,19 +194,14 @@ public class ListActivity extends AppCompatActivity {
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
                         imageView.setImageBitmap(bitmap);
-
                 }
             });
-
-
-
-
         }}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.share){
-            String txt = "Stars";
+            String txt = "Get your app NOW : https://drive.google.com/file/d/1czT5A3uOJ6ijKKgfWfMJ6T4NxRQ6S8x2/view";
             String mimeType = "text/plain";
             ShareCompat.IntentBuilder
                     .from(this)
@@ -217,5 +212,4 @@ public class ListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
